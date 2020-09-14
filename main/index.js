@@ -55,47 +55,8 @@ client.on("messageReactionRemove", (reaction, user) => {
     } catch (e) {}
 });
 
-getRamUsage = function() {
-    let os = require("os");
-    return Math.round(((os.totalmem() - os.freemem()) / os.totalmem()) * 100);
-}
-
 client.on("message", message => {
-    if (HourPerRam.indexOf(new Date().getHours()) == -1) {
-        HourPerRam.push(new Date().getHours());
-        HourPerRamData.push(getRamUsage())
-    }
-    if (HourPerRam.length > 10) {
-        HourPerRam.shift()
-        HourPerRamData.shift();
-    }
-
-    sendRamUsageGraph = function() {
-        let label = HourPerRam
-        let url = `https://quickchart.io/chart?bkg=white&c={type:'line',data:{labels:["${String(label.join("시\",\"")+"시")}"],datasets:[{label:'램+사용량',data:[${String(HourPerRamData)}],fill:false,borderColor:'rgba(75,192,192,255)'}]}}`
-        message.channel.send(new discord.MessageEmbed().setColor("2f3136").setImage(url))
-    }
-
-
-    getUser = function(tag) {
-        let us = client.user
-        if (tag == null) us = client.user
-        if (typeof tag == "number")
-            if (!isNaN(Number(tag))) us = client.users.cache.get(tag);
-        if (typeof tag == "string") us = message.guild.members.cache.find(m => m.displayName == tag)
-        if (typeof tag == "object") us = tag.author;
-        return message.guild.member(us)
-    }
-
-    say = function(msg, tag) {
-        message.member.voice.channel.join().then(connection => {
-            let url
-            if (tag == 1) url = "https://translate.google.com/translate_tts?ie=UTF-8&client=tw-ob&tl=ko&q="
-            if (tag == 0 || tag == null) url = "https://tts-translate.kakao.com/newtone?message="
-            const dispatcher = connection.play(url + encodeURIComponent(msg))
-        })
-    }
-
+    
     messageReaction.send = function(str, arr, onClick, customValue, messageStill) {
         try {
             let msg = (messageStill == null ? message : messageStill);
