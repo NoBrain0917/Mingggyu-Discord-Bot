@@ -4,12 +4,12 @@ const msub = require("./msub-api.js");
 const discord = require("discord.js");
 const client = new discord.Client();
 const prefix = "m.";
-const admin = ["390747532172460033", "350630887337230337"]
+const admin = []
 let HourPerRam = [];
 let HourPerRamData = [];
 let messageReaction = {};
 
-const TOKEN = "NzUxNzkwMTI5Mjk5MDYyODI1.X1ONHg.VSc37VkMnThskSAsccloj-3rdmo";
+const TOKEN = "";
 
 client.on('guildMemberAdd', member => {
     client.user.setActivity(`${prefix}help | ${client.users.cache.size}명과 함께 활동중`);
